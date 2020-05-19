@@ -172,6 +172,20 @@
            </widget>
           </item>
           <item>
+           <widget class="QLabel" name="label_9">
+            <property name="text">
+             <string>延时</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="inputDelay">
+            <property name="text">
+             <string>200</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QPushButton" name="initialButton">
             <property name="text">
              <string>初始化</string>

@@ -3,7 +3,6 @@
 #include<QDialog>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "convexhull.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -42,14 +41,16 @@ void MainWindow::on_initialButton_clicked()
         checkmax(p[i].x,p[i].y);
         p[i].tag = i + 1;
     }
-    ch=new ConvexHull(n,p);
+    drawboard->setMax(maxNum,ui->inputDelay->text().toInt());
+
+    ch=new ConvexHull(n,p,drawboard);
+    ch->start();
 
     string tmp=ch->printSelected();
     ui->selectedPoints->setText(QString::fromStdString(tmp));
 
     tmp=ch->printAll();
     ui->allPoints->setText(QString::fromStdString(tmp));
-    drawboard->reDraw(ch,maxNum);
 
     ui->initialButton->setText("已初始化");
     drawboard->show();
@@ -73,7 +74,7 @@ void MainWindow::on_addButton_clicked()
 
     ui->initialN->setText(QString::number(ui->initialN->text().toInt()+1));
     checkmax(x,y);
-    drawboard->reDraw(ch,maxNum);
+    drawboard->update();
 }
 
 void MainWindow::on_openPaintBoard_clicked()

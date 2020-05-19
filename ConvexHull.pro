@@ -24,7 +24,8 @@ SOURCES += \
 HEADERS += \
     convexhull.h \
     dialogdrawboard.h \
-    mainwindow.h
+    mainwindow.h \
+    point.h
 
 FORMS += \
     dialogdrawboard.ui \

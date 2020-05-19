@@ -2,7 +2,7 @@
 #include "cmath"
 #include <sstream>
 
-ConvexHull::ConvexHull(int n, point* np):n(n) { //构造函数
+ConvexHull::ConvexHull(int n, point* np,DialogDrawBoard* db):n(n),db(db) { //构造函数
     basePoint = np[0]; //获取初值
     for (int i = 0; i < n; i++) { //复制点
         p.push_back(np[i]);
@@ -10,6 +10,9 @@ ConvexHull::ConvexHull(int n, point* np):n(n) { //构造函数
             basePoint = np[i];
         }
     }
+    db->setList(&p,&q);
+}
+void ConvexHull::run(){
     initial();
 }
 void ConvexHull::initial(){
@@ -43,6 +46,8 @@ void ConvexHull::initial(){
             q.pop_back();
         }
         q.push_back(p[i]);
+        db->update();
+        db->sleep();
         //这个点符合条件
         //加进去，continue
     }

@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "convexhull.h"
 #include "dialogdrawboard.h"
+#include "point.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

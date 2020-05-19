@@ -5,40 +5,29 @@
 #include <vector>
 #include <queue>
 #include<QString>
+#include<QThread>
+#include "point.h"
+#include "dialogdrawboard.h"
+
 using namespace std;
 
-struct point {
-    int x;
-    int y;
-    int tag;
-    double w;
-    point() {}
-    point(int x, int y) :x(x), y(y){
-    }
-    point(int x, int y,int tag) :x(x), y(y),tag(tag){
-    }
-    bool operator< (const point& p2)const {
-        if (x != p2.x) {
-            return x < p2.x;
-        }
-        return y < p2.y;
-    }
-};
 
-class ConvexHull {
+class ConvexHull:public QThread {
 public:
-    ConvexHull(int n, point* np);
+    ConvexHull(int n, point* np,DialogDrawBoard*);
+    void run();
     void addPoint(int x,int y);
     double calcArch(point a, point b);
     double calcDistance(point a,point b) ;
     double calcCross(point a, point b, point c);
     string printSelected();
     string printAll();
-    vector<point> p;
-    vector<point> q;
     point basePoint;
 private:
     int n;
+    vector<point> p;
+    vector<point> q;
+    DialogDrawBoard* db;
     void initial();
 };
 

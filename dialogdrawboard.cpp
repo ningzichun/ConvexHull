@@ -36,30 +36,41 @@ void DialogDrawBoard::paintEvent(QPaintEvent *event){
     pen.setWidth(1);
     pen.setColor(QColor(50,50,50));
     painter.setPen(pen);
-    for(int i=0;i<ch->p.size();i++){
-        painter.drawText(ch->p[i].x,ch->p[i].y,QString::number(ch->p[i].tag));
+    for(int i=0;i<p->size();i++){
+        painter.drawText((*p)[i].x,(*p)[i].y,QString::number((*p)[i].tag));
     }
 
     pen.setColor(QColor(20,20,20));
     pen.setWidth(1);
     painter.setPen(pen);
 
-    for(int i=1;i<ch->q.size();i++){
-        painter.drawLine(ch->q[i-1].x,ch->q[i-1].y,ch->q[i].x,ch->q[i].y);
+    for(int i=1;i<q->size();i++){
+        painter.drawLine((*q)[i-1].x,(*q)[i-1].y,(*q)[i].x,(*q)[i].y);
     }
-    painter.drawLine(ch->q[0].x,ch->q[0].y,ch->q[ch->q.size()-1].x,ch->q[ch->q.size()-1].y);
+    painter.drawLine((*q)[0].x,(*q)[0].y,(*q)[q->size()-1].x,(*q)[q->size()-1].y);
 
 
     pen.setWidth(3);
     pen.setColor(QColor(0,0,0));
     painter.setPen(pen);
-    for(int i=0;i<ch->p.size();i++){
-        painter.drawPoint(ch->p[i].x,ch->p[i].y);
+    for(int i=0;i<p->size();i++){
+        painter.drawPoint((*p)[i].x,(*p)[i].y);
     }
 }
-void DialogDrawBoard::reDraw(ConvexHull* ch,double theMax){
-    this->ch=ch;
+void DialogDrawBoard::setMax(double theMax,int delay){
+    this->delay=delay;
     base=400;
     scaleRate=380/theMax;
+}
+
+void DialogDrawBoard::setList(vector<point> *pp,vector<point>*qq){
+    p=pp;
+    q=qq;
     update();
+}
+
+void DialogDrawBoard::sleep(){
+    if(delay){
+        Sleep(delay);
+    }
 }
