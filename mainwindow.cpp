@@ -25,7 +25,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_initialButton_clicked()
 {
-    if(ch!=NULL) delete ch;
     maxNum=1;
     int n=ui->initialN->text().toInt();
     if(n<1) {
@@ -43,14 +42,22 @@ void MainWindow::on_initialButton_clicked()
     }
     drawboard->setMax(maxNum,ui->inputDelay->text().toInt());
 
+    if(ch!=NULL){
+        ch->terminate();
+        delete ch;
+    }
     ch=new ConvexHull(n,p,drawboard);
     ch->start();
 
-    string tmp=ch->printSelected();
-    ui->selectedPoints->setText(QString::fromStdString(tmp));
-
-    tmp=ch->printAll();
+    string tmp=ch->printAll();
     ui->allPoints->setText(QString::fromStdString(tmp));
+    ui->selectedPoints->setText("");
+
+    connect(ch,&QThread::finished,[=](){
+        qDebug()<<"1";
+        ui->selectedPoints->append(QString::fromStdString(ch->printSelected()));
+//        //this->ui->selectedPoints->setText(QString::fromStdString(ch->printSelected()));
+    });
 
     ui->initialButton->setText("已初始化");
     drawboard->show();
@@ -66,20 +73,23 @@ void MainWindow::on_addButton_clicked()
     ui->newX->clear();
     ui->newY->clear();
     ch->addPoint(x,y);
+    checkmax(x,y);
+    drawboard->setMax(maxNum,ui->inputDelay->text().toInt());
 
-    string tmp=ch->printSelected(); //输出点集
-    ui->selectedPoints->setText(QString::fromStdString(tmp));
-    tmp=ch->printAll();
+    //string tmp=ch->printSelected(); //输出点集
+    //ui->selectedPoints->setText(QString::fromStdString(tmp));
+    ui->selectedPoints->setText("");
+    string tmp=ch->printAll();
     ui->allPoints->setText(QString::fromStdString(tmp));
 
     ui->initialN->setText(QString::number(ui->initialN->text().toInt()+1));
-    checkmax(x,y);
-    drawboard->update();
+    ch->start();
+    drawboard->show();
 }
 
 void MainWindow::on_openPaintBoard_clicked()
 {
-    if(ch==NULL) return;
+    //if(ch==NULL) return;
     drawboard->show();
 }
 void MainWindow::checkmax(int &a,int &b){

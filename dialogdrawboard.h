@@ -26,12 +26,13 @@ public:
     void setList(vector<point>*,vector<point>*);
     void sleep();
     ~DialogDrawBoard();
+    int finished=0;
 
 private:
     Ui::DialogDrawBoard *ui;
-    int delay;
-    vector<point>*p;
-    vector<point>*q;
+    int delay=0;
+    vector<point>*p=NULL;
+    vector<point>*q=NULL;
     double base=400;
     double scaleRate=1;
 };

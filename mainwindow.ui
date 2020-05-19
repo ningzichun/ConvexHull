@@ -81,10 +81,27 @@
        <item>
         <widget class="QPlainTextEdit" name="initialData">
          <property name="plainText">
-          <string>100 100
-200 100
-300 200
-20 20</string>
+          <string>38	21
+-25	-25
+24	-20
+21	-37
+-31	-14
+21	-10
+-19	3
+-11	39
+-40	9
+-18	-34
+-1	41
+-11	-6
+15	-14
+32	-29
+8	12
+49	45
+49	30
+14	15
+28	-42
+-11	19
+</string>
          </property>
         </widget>
        </item>
@@ -167,7 +184,7 @@
           <item>
            <widget class="QLineEdit" name="initialN">
             <property name="text">
-             <string>4</string>
+             <string>20</string>
             </property>
            </widget>
           </item>

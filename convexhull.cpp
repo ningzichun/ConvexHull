@@ -37,12 +37,18 @@ void ConvexHull::initial(){
     while(q.size())q.pop_back();
     //入点 0点和1点
     q.push_back(p[0]);
-    if(p.size()>1) q.push_back(p[1]);
+    db->update();
+    db->sleep();
+    if(p.size()>1){
+        q.push_back(p[1]);
+        db->update();
+        db->sleep();
+    }
     for (int i = 2; i < n; i++) {
         //不符合条件
         //删去顶点
         //再判断
-        while (calcCross(q[q.size() - 2], q[q.size() - 1], p[i]) < 0 && q.size() >= 2) {
+        while (calcCross(q[q.size() - 2], q[q.size() - 1], p[i]) <= 0 && q.size() >= 2) {
             q.pop_back();
         }
         q.push_back(p[i]);
@@ -51,6 +57,8 @@ void ConvexHull::initial(){
         //这个点符合条件
         //加进去，continue
     }
+    db->finished=1;
+    db->update();
 
 }
 void ConvexHull::addPoint(int x, int y){ //加点
@@ -59,7 +67,7 @@ void ConvexHull::addPoint(int x, int y){ //加点
         basePoint = point(x,y);
     }
     n++;
-    initial();
+    //initial();
 }
 double ConvexHull::calcArch(point a, point b) {
     double distance = sqrt((b.x - a.x) * (b.x - a.x) + (b.y - a.y) * (b.y - a.y));
