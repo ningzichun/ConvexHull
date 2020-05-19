@@ -26,6 +26,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_initialButton_clicked()
 {
+    if(ch!=NULL) delete ch;
+    maxNum=1;
     int n=ui->initialN->text().toInt();
     if(n<1) {
         return;
@@ -37,6 +39,7 @@ void MainWindow::on_initialButton_clicked()
     point* p = new point[n];
     for (int i = 0; i < n; i++) {
         inputData >> p[i].x >> p[i].y;
+        checkmax(p[i].x,p[i].y);
         p[i].tag = i + 1;
     }
     ch=new ConvexHull(n,p);
@@ -49,6 +52,7 @@ void MainWindow::on_initialButton_clicked()
     drawboard->reDraw(ch,maxNum);
 
     ui->initialButton->setText("已初始化");
+    drawboard->show();
 }
 
 void MainWindow::on_addButton_clicked()
@@ -68,11 +72,13 @@ void MainWindow::on_addButton_clicked()
     ui->allPoints->setText(QString::fromStdString(tmp));
 
     ui->initialN->setText(QString::number(ui->initialN->text().toInt()+1));
+    checkmax(x,y);
     drawboard->reDraw(ch,maxNum);
 }
 
 void MainWindow::on_openPaintBoard_clicked()
 {
+    if(ch==NULL) return;
     drawboard->show();
 }
 void MainWindow::checkmax(int &a,int &b){
