@@ -68,6 +68,11 @@ void MainWindow::on_addButton_clicked()
     if(ui->newX->text().size()<1 || ui->newY->text().size()<1){
         return;
     }
+    if(ch!=NULL){
+        if(ch->isRunning()){
+            ch->terminate();
+        }
+    }
     int x=ui->newX->text().toInt();
     int y=ui->newY->text().toInt();
     ui->newX->clear();

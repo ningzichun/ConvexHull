@@ -1,6 +1,5 @@
 #include "dialogdrawboard.h"
 #include "ui_dialogdrawboard.h"
-#include<QDebug>
 
 
 DialogDrawBoard::DialogDrawBoard(QWidget *parent) :
@@ -21,7 +20,7 @@ void DialogDrawBoard::paintEvent(QPaintEvent *event){
     QPainter painter(this);
     painter.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
     QPen pen(QColor(100,100,100));
-    pen.setWidth(1);
+    pen.setWidth(2);
     painter.setPen(pen);
     double base2=base/2;
     painter.drawLine(0,base2,base,base2);
@@ -35,38 +34,44 @@ void DialogDrawBoard::paintEvent(QPaintEvent *event){
 
     painter.translate(base2,base2);
     painter.scale(scaleRate,scaleRate);
-    qDebug()<<base<<scaleRate;
-    pen.setWidth(1);
+    //pen.setWidth(10);
     pen.setColor(QColor(50,50,50));
     painter.setPen(pen);
     for(int i=0;i<p->size();i++){
-        painter.drawText((*p)[i].x,(*p)[i].y,QString::number((*p)[i].tag));
+        painter.drawText((*p)[i].x,0-(*p)[i].y,QString::number((*p)[i].tag));
     }
 
     pen.setColor(QColor(20,20,20));
-    pen.setWidth(1);
+    pen.setWidth(2);
+    if(scaleRate*2<1){
+        pen.setWidth(1+1.5/scaleRate);
+    }
+    pen.setColor(QColor(0,0,0));
+    painter.setPen(pen);
     painter.setPen(pen);
 
     for(int i=1;i<q->size();i++){
-        painter.drawLine((*q)[i-1].x,(*q)[i-1].y,(*q)[i].x,(*q)[i].y);
+        painter.drawLine((*q)[i-1].x,0-(*q)[i-1].y,(*q)[i].x,0-(*q)[i].y);
     }
     if(finished){
-        painter.drawLine((*q)[0].x,(*q)[0].y,(*q)[q->size()-1].x,(*q)[q->size()-1].y);
+        painter.drawLine((*q)[0].x,0-(*q)[0].y,(*q)[q->size()-1].x,0-(*q)[q->size()-1].y);
     }
 
     pen.setWidth(3);
+    if(scaleRate*3<1){
+        pen.setWidth(1+2/scaleRate);
+    }
     pen.setColor(QColor(0,0,0));
     painter.setPen(pen);
     for(int i=0;i<p->size();i++){
-        painter.drawPoint((*p)[i].x,(*p)[i].y);
+        painter.drawPoint((*p)[i].x,0-(*p)[i].y);
     }
 }
 void DialogDrawBoard::setMax(double theMax,int delay){
     this->delay=delay;
     base=this->size().width();
     if(this->size().height()<base)base=this->size().height(); //获取窗口大小
-    qDebug()<<base;
-    scaleRate=(base/2-20)/theMax;
+    scaleRate=base/2/(theMax+16);
     finished=0;
 }
 

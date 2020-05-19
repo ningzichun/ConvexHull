@@ -81,26 +81,26 @@
        <item>
         <widget class="QPlainTextEdit" name="initialData">
          <property name="plainText">
-          <string>38	21
--25	-25
-24	-20
-21	-37
--31	-14
-21	-10
--19	3
--11	39
--40	9
--18	-34
--1	41
--11	-6
-15	-14
-32	-29
-8	12
-49	45
-49	30
-14	15
-28	-42
--11	19
+          <string>110	155
+184	214
+138	-55
+199	-104
+235	-70
+82	-210
+-145	132
+72	206
+101	228
+-217	209
+-191	12
+-171	-194
+-163	67
+-203	5
+-141	-131
+20	109
+-8	170
+107	-94
+-134	-80
+114	46
 </string>
          </property>
         </widget>
@@ -137,7 +137,7 @@
           <item>
            <widget class="QLineEdit" name="newX">
             <property name="text">
-             <string>60</string>
+             <string>300</string>
             </property>
            </widget>
           </item>
@@ -151,7 +151,7 @@
           <item>
            <widget class="QLineEdit" name="newY">
             <property name="text">
-             <string>20</string>
+             <string>300</string>
             </property>
            </widget>
           </item>
