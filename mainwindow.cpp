@@ -9,8 +9,10 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    setWindowTitle("凸包问题");
     ch=NULL;
     drawboard=new DialogDrawBoard(this);
+    drawboard->setWindowTitle("画板");
 }
 
 MainWindow::~MainWindow()
