@@ -17,9 +17,9 @@ public:
     ConvexHull(int n, point* np,DialogDrawBoard*);
     void run();
     void addPoint(int x,int y);
-    double calcArch(point a, point b);
-    double calcDistance(point a,point b) ;
-    double calcCross(point a, point b, point c);
+    double calcArch(const point &a, const point &b);
+    double calcDistance(const point &a, const point &b);
+    double calcCross(const point &a, const point &b, const point &c);
     string printSelected();
     string printAll();
     point basePoint;

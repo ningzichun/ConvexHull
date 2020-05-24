@@ -69,15 +69,15 @@ void ConvexHull::addPoint(int x, int y){ //加点
     n++;
     //initial();
 }
-double ConvexHull::calcArch(point a, point b) {
+double ConvexHull::calcArch(const point &a, const point &b) {
     double distance = sqrt((b.x - a.x) * (b.x - a.x) + (b.y - a.y) * (b.y - a.y));
     if (distance == 0) return 2.0; //为基准点
     return (b.x - a.x) * 1.0 / distance;
 }
-double ConvexHull::calcDistance(point a,point b) {
+double ConvexHull::calcDistance(const point &a, const point &b) {
     return sqrt((b.x - a.x) * (b.x - a.x) + (b.y - a.y) * (b.y - a.y));
 }
-double ConvexHull::calcCross(point a, point b, point c) {
+double ConvexHull::calcCross(const point &a, const point &b, const point &c) {
     return (b.x - a.x) * (c.y - a.y) - (c.x - a.x) * (b.y - a.y);
 }
 

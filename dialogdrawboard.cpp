@@ -22,7 +22,7 @@ void DialogDrawBoard::paintEvent(QPaintEvent *event){
     QPen pen(QColor(100,100,100));
     pen.setWidth(2);
     painter.setPen(pen);
-    double base2=base/2;
+    double base2=base/2; //画出坐标轴
     painter.drawLine(0,base2,base,base2);
     painter.drawLine(base2,0,base2,base);
     painter.drawLine(base2,0,base2-20,20);
@@ -32,12 +32,12 @@ void DialogDrawBoard::paintEvent(QPaintEvent *event){
     painter.drawText(base-10,base2+1,"x");
     painter.drawText(base2+1,10,"y");
 
-    painter.translate(base2,base2);
-    painter.scale(scaleRate,scaleRate);
+    painter.translate(base2,base2); //变换基准点
+    painter.scale(scaleRate,scaleRate); //缩放比率
     //pen.setWidth(10);
     pen.setColor(QColor(50,50,50));
     painter.setPen(pen);
-    for(int i=0;i<p->size();i++){
+    for(int i=0;i<p->size();i++){ //画出点的序号
         painter.drawText((*p)[i].x,0-(*p)[i].y,QString::number((*p)[i].tag));
     }
 
@@ -50,15 +50,15 @@ void DialogDrawBoard::paintEvent(QPaintEvent *event){
     painter.setPen(pen);
     painter.setPen(pen);
 
-    for(int i=1;i<q->size();i++){
+    for(int i=1;i<q->size();i++){ //画线
         painter.drawLine((*q)[i-1].x,0-(*q)[i-1].y,(*q)[i].x,0-(*q)[i].y);
     }
-    if(finished){
+    if(finished){ //初始化完成，连接首尾点
         painter.drawLine((*q)[0].x,0-(*q)[0].y,(*q)[q->size()-1].x,0-(*q)[q->size()-1].y);
     }
 
     pen.setWidth(3);
-    if(scaleRate*3<1){
+    if(scaleRate*3<1){ //画点
         pen.setWidth(1+2/scaleRate);
     }
     pen.setColor(QColor(0,0,0));
