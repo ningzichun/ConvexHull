@@ -1,6 +1,7 @@
 #include<sstream>
 #include<QDebug>
 #include<QDialog>
+#include<QTimer>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -13,6 +14,15 @@ MainWindow::MainWindow(QWidget *parent)
     ch=NULL;
     drawboard=new DialogDrawBoard(this);
     drawboard->setWindowTitle("画板");
+    timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, [=] {
+        if(ch!=NULL){
+            if(drawboard->finished){
+                ui->selectedPoints->setText(QString::fromStdString(ch->printSelected()));
+                timer->stop();
+            }
+        }
+    });
 }
 
 MainWindow::~MainWindow()
@@ -34,7 +44,6 @@ void MainWindow::on_initialButton_clicked()
     }
     stringstream inputData;
     inputData<<ui->initialData->toPlainText().toStdString();
-    qDebug()<<QString::fromStdString( ui->initialData->toPlainText().toStdString());
 
     point* p = new point[n];
     for (int i = 0; i < n; i++) {
@@ -49,17 +58,17 @@ void MainWindow::on_initialButton_clicked()
         delete ch;
     }
     ch=new ConvexHull(n,p,drawboard);
+
+    timer->start(100);
+    connect(ch,&QThread::finished,[=](){
+
+    });
     ch->start();
 
     string tmp=ch->printAll();
     ui->allPoints->setText(QString::fromStdString(tmp));
     ui->selectedPoints->setText("");
 
-    connect(ch,&QThread::finished,[=](){
-        qDebug()<<"1";
-        ui->selectedPoints->append(QString::fromStdString(ch->printSelected()));
-//        //this->ui->selectedPoints->setText(QString::fromStdString(ch->printSelected()));
-    });
 
     ui->initialButton->setText("已初始化");
     drawboard->show();
@@ -81,6 +90,7 @@ void MainWindow::on_addButton_clicked()
     ui->newY->clear();
     ch->addPoint(x,y);
     checkmax(x,y);
+    timer->start(100);
     drawboard->setMax(maxNum,ui->inputDelay->text().toInt());
 
     //string tmp=ch->printSelected(); //输出点集

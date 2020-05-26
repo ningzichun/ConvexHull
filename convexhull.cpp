@@ -22,14 +22,20 @@ void ConvexHull::initial(){
     }
     //对每个点按照极角降序排序，如果角度相同，按与基准点距离升序排列
     for (int i = 0; i < n; i++) {
+        bool sorted=true;
         for (int j = i + 1; j < n; j++) {
-            if (p[i].w < p[j].w) swap(p[i], p[j]);
+            if (p[i].w < p[j].w){
+                swap(p[i], p[j]);
+                sorted=0;
+            }
             else if (p[i].w == p[j].w) {
                 if (calcDistance(basePoint, p[i]) > calcDistance(basePoint, p[j])) {
                     swap(p[i], p[j]);
+                    sorted=0;
                 }
             }
         }
+        if(sorted) break;
     }
     //画线
 
@@ -59,7 +65,6 @@ void ConvexHull::initial(){
     }
     db->finished=1;
     db->update();
-
 }
 void ConvexHull::addPoint(int x, int y){ //加点
     p.push_back(point(x,y,p.size()+1));

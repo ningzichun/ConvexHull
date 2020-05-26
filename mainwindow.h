@@ -5,6 +5,8 @@
 #include "convexhull.h"
 #include "dialogdrawboard.h"
 #include "point.h"
+#include <windows.h>
+#include <sys/stat.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -27,11 +29,13 @@ private slots:
 
     void on_openPaintBoard_clicked();
 
+
 private:
     Ui::MainWindow *ui;
     DialogDrawBoard* drawboard;
     void checkmax(int&,int&);
     double maxNum=0;
+    QTimer *timer;
 
 };
 #endif // MAINWINDOW_H
